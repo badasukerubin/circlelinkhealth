@@ -19,12 +19,13 @@ class User extends Authenticatable
     /**
      * The types of users in the system
      */
-    public const TYPES = ['ADMIN', 'NURSE', 'DOCTOR', 'PATIENT'];
+    public const TYPES = ['ADMIN', 'DOCTOR', 'NURSE', 'PATIENT'];
     public const TYPE_ADMIN = 'ADMIN';
     public const TYPE_NURSE = 'NURSE';
     public const TYPE_DOCTOR = 'DOCTOR';
     public const TYPE_PATIENT = 'PATIENT';
     public const LOWER_CASE_TYPES_TO_ENUM = ['admin' => 'ADMIN', 'nurse' => 'NURSE', 'doctor' => 'DOCTOR', 'patient' => 'PATIENT'];
+    public const ENUM_TYPES_TO_LOWER_CASE = ['ADMIN' => 'admin', 'NURSE' => 'nurse', 'DOCTOR' => 'doctor', 'PATIENT' => 'patient'];
 
     /**
      * The attributes that are mass assignable.

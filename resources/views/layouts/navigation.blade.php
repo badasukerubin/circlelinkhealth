@@ -26,13 +26,10 @@
                     <div x-show="dropdownMenu"
                         class="absolute right-0 py-2 mt-16 bg-white bg-gray-100 rounded-md shadow-xl w-44"
                         @click.away="dropdownMenu = false">
-                        @foreach (App\Models\User::TYPES as $userTypes)
-                            @php
-                                $userTypes = strtolower($userTypes);
-                            @endphp
-                            <x-nav-link :href="route('users.index', ['type' => $userTypes])"
+                        @foreach (App\Models\User::LOWER_CASE_TYPES_TO_ENUM as $lowerCaseUserTypes => $enumUserTypes)
+                            <x-nav-link :href="route('users.index', ['type' => $lowerCaseUserTypes])"
                                 :active="request()->routeIs('users.index')" :dropdown="true">
-                                {{ ucfirst($userTypes) }}
+                                {{ ucfirst($lowerCaseUserTypes) }}
                             </x-nav-link>
                         @endforeach
 
