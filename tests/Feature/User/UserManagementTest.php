@@ -14,6 +14,8 @@ use Tests\TestCase;
 
 class UserManagementTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_admin_screen_can_be_rendered_to_admin()
     {
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
