@@ -22,7 +22,7 @@ class DashboardTest extends TestCase
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
         $admin = User::factory()->create([
             'type' => User::TYPE_ADMIN
-        ])->assignRole(strtolower(User::TYPE_ADMIN));
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN]);
 
         $response = $this->actingAs($admin)->get(route('dashboard'));
 
@@ -36,7 +36,7 @@ class DashboardTest extends TestCase
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
         $admin = User::factory()->create([
             'type' => User::TYPE_DOCTOR
-        ])->assignRole(strtolower(User::TYPE_DOCTOR));
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_DOCTOR]);
 
         $response = $this->actingAs($admin)->get(route('dashboard'));
 
@@ -49,7 +49,7 @@ class DashboardTest extends TestCase
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
         $admin = User::factory()->create([
             'type' => User::TYPE_NURSE
-        ])->assignRole(strtolower(User::TYPE_NURSE));
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_NURSE]);
 
         $response = $this->actingAs($admin)->get(route('dashboard'));
 
@@ -62,7 +62,7 @@ class DashboardTest extends TestCase
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
         $admin = User::factory()->create([
             'type' => User::TYPE_PATIENT
-        ])->assignRole(strtolower(User::TYPE_PATIENT));
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]);
 
         $response = $this->actingAs($admin)->get(route('dashboard'));
 

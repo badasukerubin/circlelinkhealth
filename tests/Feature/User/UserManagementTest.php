@@ -16,14 +16,38 @@ class UserManagementTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_screen_can_be_rendered_to_admin()
+    public function test_patients_screen_can_be_rendered_to_admin()
     {
         app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
         $admin = User::factory()->create([
             'type' => User::TYPE_ADMIN
-        ])->assignRole(strtolower(User::TYPE_ADMIN));
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN]);
 
-        $response = $this->actingAs($admin)->get(route('users.index', ['type'=> 'admin']));
+        $response = $this->actingAs($admin)->get(route('users.index', ['type'=> User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]]));
+
+        $response->assertSuccessful();
+    }
+
+    public function test_patients_screen_can_be_rendered_to_doctor()
+    {
+        app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
+        $admin = User::factory()->create([
+            'type' => User::TYPE_DOCTOR
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_DOCTOR]);
+
+        $response = $this->actingAs($admin)->get(route('users.index', ['type'=> User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]]));
+
+        $response->assertSuccessful();
+    }
+
+    public function test_patients_screen_can_be_rendered_to_nurse()
+    {
+        app(DatabaseSeeder::class)->call([RoleTableSeeder::class, PermissionTableSeeder::class, RoleHasPermissionTableSeeder::class]);
+        $admin = User::factory()->create([
+            'type' => User::TYPE_NURSE
+        ])->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_NURSE]);
+
+        $response = $this->actingAs($admin)->get(route('users.index', ['type'=> User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]]));
 
         $response->assertSuccessful();
     }
