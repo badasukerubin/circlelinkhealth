@@ -2,28 +2,31 @@
 
 Build a Laravel application for a medical practice that helps patients manage their blood pressure. 
 
+***References***
+Ray Dump Debugging: http://myray.app/
+
 **The application should have below features**
 
 - [x] A page for creating practice staff users (Roles: Admin, Nurse, Doctor)
 - [x] A page for creating patients
 - [X] A page to record blood pressure observations for patients
-- [ ] Export CSV of practice users (Admin, Nurse, Doctor)
-- [ ] Export CSV of patient blood pressure observations 
+- [x] Export CSV of practice users (Admin, Nurse, Doctor)
+- [x] Export CSV of patient blood pressure observations 
 
 **Dev requirements**
 
-- [ ] Use Laravel Excel to generate CSV
+- [x] Use Laravel Excel to generate CSV
 - [x] Use Livewire Datatables
 - [x] Use tailwind css
 - [x] Write tests
 - [x] Use Alpine/Livewire, not Vue.js or anything else
-- [ ] Create a seeder that seeds the DB with 10000 practice staff, and 50000 patients. We will run this seeder when evaluating your project. The exports have to work.
+- [x] Create a seeder that seeds the DB with 10000 practice staff, and 50000 patients. We will run this seeder when evaluating your project. The exports have to work.
 
 **ACL**
 
-- [ ] Any staff member can see all patients in it, and create blood pressure observations for them
-- [ ] Only Admins can “Export CSV of practice staff”
-- [ ] Admins and Doctors can “Export CSV of patient Blood Pressure”
+- [x] Any staff member can see all patients in it, and create blood pressure observations for them
+- [x] Only Admins can “Export CSV of practice staff”
+- [x] Admins and Doctors can “Export CSV of patient Blood Pressure”
 
 ## Installation
 
