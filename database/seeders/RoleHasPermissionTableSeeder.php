@@ -44,7 +44,6 @@ class RoleHasPermissionTableSeeder extends Seeder
 
         // Only Admins can “Export CSV of practice staff”
         $role = Role::where('name', User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN])->first();
-        \ray(Role::all());
         $role->givePermissionTo(array_merge($userPermissionsExport, $userPermissions));
 
         // Admins and Doctors can “Export CSV of patient Blood Pressure”

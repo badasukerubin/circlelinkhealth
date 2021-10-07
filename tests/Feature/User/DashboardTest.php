@@ -27,7 +27,6 @@ class DashboardTest extends TestCase
         $response = $this->actingAs($admin)->get(route('dashboard'));
 
         $response->assertSuccessful();
-        \ray(self::DASHBOARD_TEXT);
         $response->assertSeeText(self::DASHBOARD_TEXT);
     }
 

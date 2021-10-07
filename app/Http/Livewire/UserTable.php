@@ -25,7 +25,6 @@ class UserTable extends DataTableComponent
 
     public function columns(): array
     {
-        ray()->showQueries();
         return [
             Column::make('ID')->searchable()->sortable(),
             Column::make('Full Name', 'name')->searchable()->sortable(),
@@ -33,6 +32,7 @@ class UserTable extends DataTableComponent
             Column::make('Email Verified')->searchable()->sortable(),
             Column::make('Created At')->searchable()->sortable(),
             Column::make('Updated At')->searchable()->sortable(),
+            Column::make('Record Blood Pressure')->hideIf(!(request()->type === User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT])),
         ];
     }
 
