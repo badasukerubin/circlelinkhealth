@@ -6,7 +6,7 @@ Build a Laravel application for a medical practice that helps patients manage th
 
 - [x] A page for creating practice staff users (Roles: Admin, Nurse, Doctor)
 - [x] A page for creating patients
-- [ ] A page to record blood pressure observations for patients
+- [X] A page to record blood pressure observations for patients
 - [ ] Export CSV of practice users (Admin, Nurse, Doctor)
 - [ ] Export CSV of patient blood pressure observations 
 
@@ -15,7 +15,7 @@ Build a Laravel application for a medical practice that helps patients manage th
 - [ ] Use Laravel Excel to generate CSV
 - [x] Use Livewire Datatables
 - [x] Use tailwind css
-- [ ] Write tests
+- [x] Write tests
 - [x] Use Alpine/Livewire, not Vue.js or anything else
 - [ ] Create a seeder that seeds the DB with 10000 practice staff, and 50000 patients. We will run this seeder when evaluating your project. The exports have to work.
 
