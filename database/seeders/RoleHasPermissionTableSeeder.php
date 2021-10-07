@@ -16,8 +16,11 @@ class RoleHasPermissionTableSeeder extends Seeder
      */
     public function run()
     {
+        $userListPermission = [
+            'user-list'
+        ];
+
         $userPermissions = [
-            'user-list',
             'user-create',
             'user-edit',
             'user-delete',
@@ -40,16 +43,18 @@ class RoleHasPermissionTableSeeder extends Seeder
 
         // Any staff member (Admin, Doctor, Nurse) can see all patients in it, and create blood pressure observations for them
         $roles = Role::whereNotIn('name', [User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]])->get();
-        $roles->map(fn($role) => $role->givePermissionTo(array_merge($patientBloodPressure, $userPermissions)));
+        $roles->map(fn ($role) => $role->givePermissionTo(array_merge($patientBloodPressure, $userListPermission)));
+
+        $role = Role::where('name', User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT])->first();
+        $role->givePermissionTo(array_merge($patientBloodPressure));
 
         // Only Admins can “Export CSV of practice staff”
         $role = Role::where('name', User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN])->first();
-        \ray(Role::all());
         $role->givePermissionTo(array_merge($userPermissionsExport, $userPermissions));
 
         // Admins and Doctors can “Export CSV of patient Blood Pressure”
         $roles = Role::whereIn('name', [User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN], User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_DOCTOR]])->get();
-        $roles->map(fn($role) => $role->givePermissionTo($patientBloodPressureExport));
+        $roles->map(fn ($role) => $role->givePermissionTo($patientBloodPressureExport));
 
         // $staffMembers = [User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN], User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_DOCTOR], User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_NURSE]];
         // $staffMembersWithID  = array_intersect($staffMembers, array_keys($role));

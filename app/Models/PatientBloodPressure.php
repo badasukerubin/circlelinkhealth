@@ -18,5 +18,11 @@ class PatientBloodPressure extends Model
         'systolic',
         'diastolic',
         'time_of_record',
+        'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

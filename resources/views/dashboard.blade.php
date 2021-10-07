@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ ucfirst(\App\Models\User::ENUM_TYPES_TO_LOWER_CASE[auth()->user()->type]) . '\'s Dashboard' }}
         </h2>
     </x-slot>
 

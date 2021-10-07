@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\PatientBloodPressure\StoreRequest;
 use App\Models\PatientBloodPressure;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PatientBloodPressureController extends Controller
 {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:patient-blood-pressure-list|patient-blood-pressure-create|patient-blood-pressure-edit|patient-blood-pressure-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:patient-blood-pressure-create', ['only' => ['create','store']]);
+        $this->middleware('permission:patient-blood-pressure-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:patient-blood-pressure-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,7 @@ class PatientBloodPressureController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.patientbloodpressure.index');
     }
 
     /**
@@ -22,9 +35,10 @@ class PatientBloodPressureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->id, 404);
+        return view('users.patientbloodpressure.create');
     }
 
     /**
@@ -33,9 +47,23 @@ class PatientBloodPressureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->id, 404);
+        $userId = fn ($request): ?int =>  auth()->user()->type === User::TYPE_PATIENT ? auth()->id() : $request->id;
+        $user = User::findOrFail($userId($request));
+
+        if ($user->type === User::TYPE_PATIENT) {
+            $patientBloodPressure = $request->validated();
+            $patientBloodPressure = array_merge($patientBloodPressure, ['user_id' => $userId($request)]);
+
+            \ray($patientBloodPressure);
+            PatientBloodPressure::create($patientBloodPressure);
+
+            return redirect()->back()->with('status', 'Blood pressure recorded successfully');
+        }
+
+        return redirect()->back()->with('status', 'You cannot record blood pressure for a non patient');
     }
 
     /**

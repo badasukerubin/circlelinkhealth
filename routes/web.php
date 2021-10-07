@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('users', UserController::class);
 
-    // Route::resource('patientbloodpressure', PatientBloodPressureController::class);
+    Route::resource('patientbloodpressure', PatientBloodPressureController::class);
 });
 
 require __DIR__.'/auth.php';
