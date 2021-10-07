@@ -40,7 +40,7 @@ class RoleHasPermissionTableSeeder extends Seeder
 
         // Any staff member (Admin, Doctor, Nurse) can see all patients in it, and create blood pressure observations for them
         $roles = Role::whereNotIn('name', [User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]])->get();
-        $roles->map(fn($role) => $role->givePermissionTo($patientBloodPressure));
+        $roles->map(fn($role) => $role->givePermissionTo(array_merge($patientBloodPressure, $userPermissions)));
 
         // Only Admins can “Export CSV of practice staff”
         $role = Role::where('name', User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN])->first();

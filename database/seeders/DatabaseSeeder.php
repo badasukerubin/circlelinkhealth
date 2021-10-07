@@ -22,25 +22,25 @@ class DatabaseSeeder extends Seeder
         User::factory(1)->create([
             'type' => User::TYPE_ADMIN
         ])->each(function ($user) {
-            $user->assignRole(strtolower(User::TYPE_ADMIN));
+            $user->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_ADMIN]);
         });
         // Seeding for doctor
         User::factory(1)->create([
             'type' => User::TYPE_DOCTOR
         ])->each(function ($user) {
-            $user->assignRole(strtolower(User::TYPE_DOCTOR));
+            $user->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_DOCTOR]);
         });
         // Seeding for nurse
         User::factory(1)->create([
             'type' => User::TYPE_NURSE
         ])->each(function ($user) {
-            $user->assignRole(strtolower(User::TYPE_NURSE));
+            $user->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_NURSE]);
         });
         // Seeding for patient
         User::factory(1)->create([
             'type' => User::TYPE_PATIENT
         ])->each(function ($user) {
-            $user->assignRole(strtolower(User::TYPE_PATIENT));
+            $user->assignRole(User::ENUM_TYPES_TO_LOWER_CASE[User::TYPE_PATIENT]);
         });
     }
 }
