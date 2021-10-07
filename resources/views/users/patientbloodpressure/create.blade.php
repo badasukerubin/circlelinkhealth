@@ -20,7 +20,7 @@
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
                     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST"
-                        action="{{ route('patientbloodpressure.store') }}">
+                        action="{{ route('patientbloodpressure.store', ['id' => request()->id]) }}">
                         @csrf
 
                         <!-- Systolic -->

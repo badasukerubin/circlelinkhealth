@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PatientBloodPressure;
+use App\Models\User;
+use Illuminate\Database\Query\JoinClause;
 
 class PatientBloodPressureTable extends DataTableComponent
 {
@@ -24,8 +26,12 @@ class PatientBloodPressureTable extends DataTableComponent
 
     public function query(): Builder
     {
-        return PatientBloodPressure::query();
-        // ->when(auth()->user()->type === User::TYPE_PATIENT, fn ($query, $type) => $query->where('type', User::LOWER_CASE_TYPES_TO_ENUM[request()->type]));
+        return PatientBloodPressure::query()
+                ->when(auth()->user()->type === User::TYPE_PATIENT, fn ($query) => $query
+                                                                                    ->leftJoin('users', function (JoinClause $query) {
+                                                                                        $query->on('user.id', '=', 'patient_blood_pressures.user_id')
+                                                                                        ->where('user.type', '=', User::TYPE_PATIENT);
+                                                                                    }));
     }
 
     public function rowView(): string

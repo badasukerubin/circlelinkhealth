@@ -37,7 +37,7 @@ class PatientBloodPressureController extends Controller
      */
     public function create(Request $request)
     {
-        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->type, 404);
+        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->id, 404);
         return view('users.patientbloodpressure.create');
     }
 
@@ -49,17 +49,21 @@ class PatientBloodPressureController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->type, 404);
-        $userId = fn($request):?int =>  auth()->user()->type === User::TYPE_PATIENT ? auth()->id() : $request->type;
-        $patientBloodPressure = $request->validated();
-        $patientBloodPressure = array_merge($patientBloodPressure, ['user_id' => $userId($request)]);
+        abort_if(auth()->user()->type !== User::TYPE_PATIENT && !$request->id, 404);
+        $userId = fn ($request): ?int =>  auth()->user()->type === User::TYPE_PATIENT ? auth()->id() : $request->id;
+        $user = User::findOrFail($userId($request));
 
+        if ($user->type === User::TYPE_PATIENT) {
+            $patientBloodPressure = $request->validated();
+            $patientBloodPressure = array_merge($patientBloodPressure, ['user_id' => $userId($request)]);
 
-        PatientBloodPressure::create($patientBloodPressure);
+            \ray($patientBloodPressure);
+            PatientBloodPressure::create($patientBloodPressure);
 
-        return redirect()->back()->with('status', 'Blood pressure recorded successfully');
+            return redirect()->back()->with('status', 'Blood pressure recorded successfully');
+        }
 
-
+        return redirect()->back()->with('status', 'You cannot record blood pressure for a non patient');
     }
 
     /**

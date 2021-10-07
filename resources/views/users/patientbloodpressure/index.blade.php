@@ -14,12 +14,15 @@
                         unset($userTypes[\App\Models\User::TYPE_PATIENT]);
                         $userTypesWithoutPatient = $userTypes;
                     @endphp
-                    <a href="{{ route('patientbloodpressure.create') }}">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Record Blood Pressure
-                        </button>
-                    </a>
-                    <br /> <br />
+                    @if (auth()->user()->type === \App\Models\User::TYPE_PATIENT)
+                        <a href="{{ route('patientbloodpressure.create') }}">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Record Blood Pressure
+                            </button>
+                        </a>
+                        <br /> <br />
+                    @endif
+
                     <livewire:patient-blood-pressure-table />
                 </div>
             </div>
