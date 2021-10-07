@@ -10,7 +10,7 @@ use App\Models\User;
 class UserTable extends DataTableComponent
 {
     public array $bulkActions = [
-        'exportSelected' => 'Export',
+        'exportSelected' => 'Export'
     ];
 
     public function exportSelected()

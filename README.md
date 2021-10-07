@@ -4,8 +4,8 @@ Build a Laravel application for a medical practice that helps patients manage th
 
 **The application should have below features**
 
-- [ ] A page for creating practice staff users (Roles: Admin, Nurse, Doctor)
-- [ ] A page for creating patients
+- [x] A page for creating practice staff users (Roles: Admin, Nurse, Doctor)
+- [x] A page for creating patients
 - [ ] A page to record blood pressure observations for patients
 - [ ] Export CSV of practice users (Admin, Nurse, Doctor)
 - [ ] Export CSV of patient blood pressure observations 

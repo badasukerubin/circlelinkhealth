@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\StoreRequest;
 use App\Models\PatientBloodPressure;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         abort_if(!$request->type, 404);
-        return view('users');
+        return view('users.index');
     }
 
     /**
@@ -36,9 +37,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        abort_if(!$request->type, 404);
+        $type = $request->type;
+        $type = is_array($type) ? array_merge(...array_map(fn($type) => [$type => ucfirst(User::ENUM_TYPES_TO_LOWER_CASE[$type])], $type)) : $type;
+
+        return view('users.create', compact('type'));
     }
 
     /**
@@ -47,9 +52,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        User::create($request->validated());
+
+        return redirect()->back()->with('status', 'User created successfully');
+
     }
 
     /**

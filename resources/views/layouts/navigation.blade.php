@@ -18,7 +18,8 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex relative" x-data="{dropdownMenu: false}">
-                    <x-nav-link href="#" :active="request()->routeIs('users.index')"
+                    <x-nav-link href="#"
+                        :active="request()->routeIs('users.index') || request()->routeIs('users.create')"
                         @click="dropdownMenu = ! dropdownMenu">
                         {{ __('User Management') }}
                     </x-nav-link>
@@ -27,8 +28,7 @@
                         class="absolute right-0 py-2 mt-16 bg-white bg-gray-100 rounded-md shadow-xl w-44"
                         @click.away="dropdownMenu = false">
                         @foreach (App\Models\User::LOWER_CASE_TYPES_TO_ENUM as $lowerCaseUserTypes => $enumUserTypes)
-                            <x-nav-link :href="route('users.index', ['type' => $lowerCaseUserTypes])"
-                                :active="request()->routeIs('users.index')" :dropdown="true">
+                            <x-nav-link :href="route('users.index', ['type' => $lowerCaseUserTypes])" :dropdown="true">
                                 {{ ucfirst($lowerCaseUserTypes) }}
                             </x-nav-link>
                         @endforeach
